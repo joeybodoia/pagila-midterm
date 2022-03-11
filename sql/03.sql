@@ -21,7 +21,7 @@ from film f
 join film_category using (film_id)
 join category c using (category_id)
 where c.name = 'Children'
-and (f.rating = 'R' or f.rating = 'NC-17');
+  and (f.rating = 'R' or f.rating = 'NC-17');
 
 
 

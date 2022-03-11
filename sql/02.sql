@@ -42,5 +42,6 @@ join inventory using (inventory_id)
 join film using (film_id)
 join film_actor using (film_id)
 join actor a using (actor_id)
-where a.first_name || ' ' || a.last_name = 'RUSSELL BACALL'; 
+where 
+    a.first_name || ' ' || a.last_name = 'RUSSELL BACALL'; 
 

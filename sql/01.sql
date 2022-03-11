@@ -41,6 +41,6 @@ join inventory using (film_id)
 join rental using (inventory_id)
 join customer using (customer_id)
 where film.title !~ 'F'
-and actor.first_name || ' ' || actor.last_name !~ 'F'
-and customer.first_name || ' ' || customer.last_name !~ 'F'
+  and actor.first_name || ' ' || actor.last_name !~ 'F'
+  and customer.first_name || ' ' || customer.last_name !~ 'F'
 group by film.title;
