@@ -17,10 +17,49 @@ CREATE TABLE project (
     updated_at TIMESTAMPTZ
 );
 
+-- notes:
+-- integer = int4 => len=4
+-- smallint = int2 => len=2 
+-- bigint = int8 =>  len=8
+
+-- PART 1 final answer:
+CREATE TABLE project (
+    -- len=16
+    developer_id UUID,
+
+    -- len=8
+    author_id BIGINT NOT NULL,
+    created_at TIMESTAMP WITH TIME ZONE,
+    updated_at TIMESTAMPTZ,
+    
+    -- len=4
+    target_id INTEGER,
+    project_id INTEGER NOT NULL UNIQUE,
+    id SERIAL PRIMARY KEY,
+
+    -- len=2
+    action SMALLINT NOT NULL,
+
+    -- len=-1
+    title CHAR(256),    
+    data TEXT,
+    developer_addr INET,
+    target_type VARCHAR(2)
+
+);
+
+
+
+
 -- PART 2:
 -- Complete the table below describing the number of bytes used by the row created by the following insert statement.
 -- Use the original column order defined above,
 -- and not your modified order from part 1.
+
+--notes:
+-- presence of null value + >8 columns => header 32
+-- header+data = 88 => 88 % 8 = 0 => no padding needed
+-- alignments: i => %4=0, d => %8=0, c => no restrictions, s => %2=0  
 
 INSERT INTO project VALUES (
     0,
@@ -37,7 +76,7 @@ INSERT INTO project VALUES (
     '2022-03-09T18:34:27+00:00'
 );
 
--- Header:
--- Data:
--- Padding:
--- Total:
+-- Header: 32
+-- Data: 56
+-- Padding: 0
+-- Total: 88

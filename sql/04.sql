@@ -15,3 +15,36 @@
  * NOTE:
  * You do not have to include movies with similarity score 0 in your results (but you may if you like).
  */
+
+-- first find customer ids of customers who have rented American Circus
+/*
+select customer_id
+from customer
+join rental using (customer_id)
+join inventory using (inventory_id)
+join film f using (film_id)
+where f.title = 'AMERICAN CIRCUS';
+*/
+
+
+-- final query:
+select 
+    title, 
+    count(title) as "similarity score" 
+from film
+join inventory using (film_id)
+join rental using (inventory_id)
+join customer using (customer_id)
+where customer_id in (
+    select customer_id
+    from customer
+    join rental using (customer_id)
+    join inventory using (inventory_id)
+    join film f using (film_id)
+    where f.title = 'AMERICAN CIRCUS'
+)
+group by title
+order by "similarity score" desc;
+
+
+
