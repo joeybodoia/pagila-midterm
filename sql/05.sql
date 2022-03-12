@@ -76,6 +76,7 @@ INSERT INTO project VALUES (
     '2022-03-09T18:34:27+00:00'
 );
 
+-- PART 2 final answer:
 -- Header: 32
 -- Data: 56
 -- Padding: 0

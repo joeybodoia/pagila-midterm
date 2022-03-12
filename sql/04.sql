@@ -18,7 +18,7 @@
 
 -- first find customer ids of customers who have rented American Circus
 /*
-select customer_id
+select distinct customer_id
 from customer
 join rental using (customer_id)
 join inventory using (inventory_id)
@@ -27,24 +27,25 @@ where f.title = 'AMERICAN CIRCUS';
 */
 
 
+-- note: the same customer can rent a movie more than once
+-- ex: customer_id 251 rented WHISPERER GIANT twice, but that should only count as one customer when comparing to AMERICAN CIRCUS
+
 -- final query:
 select 
-    title, 
-    count(title) as "similarity score" 
-from film
+    f.title, 
+    count(distinct c.customer_id) as "similarity score"
+from film f
 join inventory using (film_id)
 join rental using (inventory_id)
-join customer using (customer_id)
-where customer_id in (
-    select customer_id
+join customer c using (customer_id)
+where c.customer_id in (
+    select distinct customer_id
     from customer
     join rental using (customer_id)
     join inventory using (inventory_id)
-    join film f using (film_id)
-    where f.title = 'AMERICAN CIRCUS'
+    join film using (film_id)
+    where title = 'AMERICAN CIRCUS'
 )
-group by title
+group by f.title
 order by "similarity score" desc;
-
-
 

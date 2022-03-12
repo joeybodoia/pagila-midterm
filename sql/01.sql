@@ -12,26 +12,7 @@
  */
 
 
--- only want titles for final query
-
-/*
-select count(distinct "ftitle") from (
-    select film.title as "ftitle", actor.first_name, actor.last_name, customer.first_name, customer.last_name
-from actor
-join film_actor using (actor_id)
-join film using (film_id)
-join inventory using (film_id)
-join rental using (inventory_id)
-join customer using (customer_id)
-where film.title !~ 'F'
-and actor.first_name || ' ' || actor.last_name !~ 'F'
-and customer.first_name || ' ' || customer.last_name !~ 'F'
-) t ;
-*/
-
--- note: all film titles, actor first and last names, and customer first and last names are completely uppercase, so no need to check for lowercase 'f'.
-
--- final query
+-- final query:
 select 
     film.title
 from actor
